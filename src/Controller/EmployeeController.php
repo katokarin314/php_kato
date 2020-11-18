@@ -35,9 +35,6 @@ class EmployeeController extends AppController
                 ->where(["name like"=> '%' . $name . '%'])
                 ->contain('PositionName');
         }
-        $this->set('Employee', $employee);
-    
-       
-        $this->render($this->request->action);
+        $this->set('Employee', $employee);       
     }
 }
