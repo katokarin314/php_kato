@@ -53,7 +53,7 @@ class PositionNameTable extends Table
 
         $validator
             ->scalar('position_name')
-            ->maxLength('position_name', 255)
+            ->maxLength('position_name', 100)
             ->requirePresence('position_name', 'create')
             ->notEmptyString('position_name');
 

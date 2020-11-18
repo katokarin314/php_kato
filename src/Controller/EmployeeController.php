@@ -31,7 +31,8 @@ class EmployeeController extends AppController
             ->contain('PositionName');
         if($this->request->is('post')){    
             $name = $this->request->data['name'];
-            $employee = $this->Employee->find()
+            $employee = $this->Employee
+                ->find()
                 ->where(["name like"=> '%' . $name . '%'])
                 ->contain('PositionName');
         }
