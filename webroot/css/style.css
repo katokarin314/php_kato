@@ -373,9 +373,9 @@ table thead tr {
 table tr th {
     padding: 0.5625rem 0.625rem;
     font-size: 0.875rem;
-    color: #1798A5;
+    color: #668ad8;
     text-align: left;
-    border-bottom: 2px solid #1798A5;
+    border-bottom: 2px dotted #668ad8;
 }
 
 table tr:nth-of-type(even) {
@@ -406,7 +406,14 @@ fieldset legend {
 }
 
 button {
-    background: #966600;
+    display: inline-block;
+    padding: 0.2em 1em;
+    text-decoration: none;
+    background: #668ad8;
+    color: #FFF;
+    border-radius: 3px;
+    box-shadow: 0px 0px 0px 3px #668ad8;
+    border: dashed 1px #FFF;
 }
 
 div.message {
@@ -498,9 +505,26 @@ div.message.hidden {
 }
 
 .content h3 {
-    color: #be140b;
-    padding-bottom: 0.5rem;
-    margin-bottom: 20px;
+    position: relative;
+    color: #333;
+    text-shadow: 0 0 2px white;
+    background: #e0f3ff;
+    z-index: -4;
+    border-radius: 0 10px 10px;
+  }
+  
+h3:before {
+    content: "";
+    position: absolute;
+    background: #9de5ff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    top: 50%;
+    left: -15px;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    z-index: -1;
 }
 
 .content h4 {
@@ -510,12 +534,17 @@ div.message.hidden {
     border-bottom: 2px solid #be140b;
 }
 
-.content .related h4 {
-    color: #4d8f97;
-    padding-bottom: 0.5rem;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    border-bottom: 0px;
+.content h6 {
+    position: relative;
+    padding-right: 25px;
+}
+h6:after {
+    position: absolute;
+    content: '';
+    bottom: -3px;
+    right: 0px;
+    width: 15%;
+    border-bottom: solid 3px rgb(119, 195, 223);
 }
 
 table td {

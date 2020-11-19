@@ -1,0 +1,130 @@
+div{
+    width: 800px;
+}
+.index table {
+    margin-top: 0rem;
+    border: 0;
+    width: 100%;
+    table-layout: fixed;
+}
+body {
+    background: #eeeeee;
+    font-family: Meiryo;
+}
+table {
+    background: #fff;
+    margin-bottom: 1.25rem;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: none;
+    table-layout: fixed;
+    width: 100%;
+}
+
+table thead {
+    background: none;
+}
+
+table tr {
+    border-bottom: 1px solid #ebebec;
+}
+
+table thead tr {
+    border-bottom: 1px solid #1798A5;
+}
+
+table tr th {
+    padding: 0.5625rem 0.625rem;
+    font-size: 0.875rem;
+    color: #668ad8;
+    text-align: left;
+    border-bottom: 2px dotted #668ad8;
+}
+
+table tr:nth-of-type(even) {
+    background: none;
+}
+
+input{
+    border-radius:2px 0 0 2px;
+    padding: 0.3rem 1.2rem;
+    margin-bottom:10px;		
+    }
+
+button {
+    display: inline-block;
+    padding: 0.1em 1em;
+    text-decoration: none;
+    background: #668ad8;
+    color: #FFF;
+    border-radius: 3px;
+    box-shadow: 0px 0px 0px 3px #668ad8;
+    border: dashed 1px #FFF;
+}
+
+.content {
+    padding: 2rem;
+}
+
+/* Force equal height by overflowing */
+.content,
+#actions-sidebar {
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+@media(max-width: 640px) {
+    #actions-sidebar {
+        padding-bottom: 2rem;
+        margin-bottom: 0;
+    }
+}
+
+.content h3 {
+    position: relative;
+    color: #333;
+    text-shadow: 0 0 2px white;
+    background: #9de5ff;
+    z-index: -4;
+    border-radius: 0 10px 10px;
+  }
+  
+h3:before {
+    content: "";
+    position: absolute;
+    background: #1696c5;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    top: 50%;
+    left: -15px;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    z-index: -1;
+}
+
+.content h5 {
+    position: relative;
+    padding-right: 25px;
+}
+h5:after {
+    position: absolute;
+    content: '';
+    bottom: -3px;
+    right: 0px;
+    width: 15%;
+    border-bottom: solid 3px rgb(119, 195, 223);
+}
+
+.content h4 {
+    position: relative;
+    color: #333;
+    padding-right: 0px;
+    margin-bottom: -5px;
+}
+
+table td {
+    vertical-align: top;
+    word-break: break-all;
+    padding: 0.5625rem 0.625rem;
+    font-size: 0.875rem;
+}
