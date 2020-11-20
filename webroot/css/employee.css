@@ -1,5 +1,6 @@
 div{
-    width: 800px;
+    width: 750px;
+    margin: 0 auto;
 }
 .index table {
     margin-top: 0rem;
@@ -20,37 +21,30 @@ table {
     table-layout: fixed;
     width: 100%;
 }
-
-table thead {
-    background: none;
-}
-
 table tr {
-    border-bottom: 1px solid #ebebec;
+    border-bottom: 1px solid #dcdcdd;
 }
-
-table thead tr {
-    border-bottom: 1px solid #1798A5;
-}
-
 table tr th {
     padding: 0.5625rem 0.625rem;
     font-size: 0.875rem;
     color: #668ad8;
     text-align: left;
+    border-top:1px solid  #dcdcdd;
     border-bottom: 2px dotted #668ad8;
+    border-left:1px solid  #dcdcdd;
+    border-right:1px solid  #dcdcdd;
 }
-
-table tr:nth-of-type(even) {
-    background: none;
+table tr td {
+    font-size: 0.875rem;
+    border-left:1px solid  #dcdcdd;
+    border-right:1px solid  #dcdcdd;
+    vertical-align: top;
+    word-break: break-all;
+    padding: 0.5625rem 0.625rem;
 }
-
 input{
-    border-radius:2px 0 0 2px;
-    padding: 0.3rem 1.2rem;
     margin-bottom:10px;		
     }
-
 button {
     display: inline-block;
     padding: 0.1em 1em;
@@ -61,37 +55,27 @@ button {
     box-shadow: 0px 0px 0px 3px #668ad8;
     border: dashed 1px #FFF;
 }
-
 .content {
     padding: 2rem;
 }
-
 /* Force equal height by overflowing */
 .content,
 #actions-sidebar {
     margin-bottom: -99999px;
     padding-bottom: 99999px;
 }
-@media(max-width: 640px) {
-    #actions-sidebar {
-        padding-bottom: 2rem;
-        margin-bottom: 0;
-    }
-}
-
 .content h3 {
     position: relative;
     color: #333;
     text-shadow: 0 0 2px white;
-    background: #9de5ff;
+    background:rgb(119, 195, 223);;
     z-index: -4;
     border-radius: 0 10px 10px;
   }
-  
 h3:before {
     content: "";
     position: absolute;
-    background: #1696c5;
+    background:#668ad8;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -101,7 +85,6 @@ h3:before {
     transform: translateY(-50%);
     z-index: -1;
 }
-
 .content h5 {
     position: relative;
     padding-right: 25px;
@@ -114,7 +97,6 @@ h5:after {
     width: 15%;
     border-bottom: solid 3px rgb(119, 195, 223);
 }
-
 .content h4 {
     position: relative;
     color: #333;
@@ -122,9 +104,37 @@ h5:after {
     margin-bottom: -5px;
 }
 
-table td {
-    vertical-align: top;
-    word-break: break-all;
-    padding: 0.5625rem 0.625rem;
-    font-size: 0.875rem;
+
+@media screen and (max-device-width: 760px) {
+    div {
+    width: 300px;
+    margin: 0 auto;
+    }
+}
+ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+ul.pagination li {display: inline;}
+
+ul.pagination li a {
+    color: #1696c5;
+    float: center;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+ul.header {
+  display: flex;
+  width: 100%;
+  height: 60px;
+  background-color:#d5e2ff;
+  background-image:
+	 repeating-linear-gradient(-45deg,#fff, #fff 7px,transparent 0, transparent 14px);
+  align-items: center;
+}
+ul.header menu {
+  list-style: none;
+  display: inline-block;
+  padding: 10px;
 }

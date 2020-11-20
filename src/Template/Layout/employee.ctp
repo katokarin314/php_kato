@@ -15,30 +15,33 @@
 
 $cakeDescription = 'CakePHP: the rapid development php framework';
 ?>
+<?php
+echo $this->Html->css('employee');
+?>
 <!DOCTYPE html>
 <html>
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <?= $cakeDescription ?>:
-        <?= $this->fetch('title') ?>
+        PHP研修課題
     </title>
     <?= $this->Html->meta('icon') ?>
-
-    <?= $this->Html->css('employee.css') ?>
-  
-    <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
+    <ul class="header">
+        <h2>従業員一覧</h2>
+        <menu><a href="#">項目2</a></memu>
+        <menu><a href="#">項目3</a></memu>
+        <menu><a href="#">項目4</a></memu>
+        <menu><a href="#">項目5</a></memu>
+      </ul>
+</nav>
 </head>
 <body>
-    <?= $this->Flash->render() ?>
-    <div class="container clearfix">
-        <?= $this->fetch('content') ?>
-    </div>
-    <footer>
-    <th>フッター</th>
-    </footer>
+    
+    <?= $this->fetch('content') ?>
+
 </body>
+<footer>
+    <th>フッター</th>
+</footer>
 </html>

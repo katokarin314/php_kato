@@ -2,15 +2,11 @@
 echo $this->Html->css('employee');
 ?>
 <div class="employee index large-9 medium-8 columns content">
-    <h3>従業員一覧</h3>
-    
-    <?= $this->Form->create('Employee',['url'=>['action'=>'index','type'=>'post']]) ?>
-        <h4>従業員検索</h4>
-        <?= $this->Form->input('name',['label'=>'']); ?>
-        <?= $this->Form->button('検索') ?>
-        <?= $this->Form->end() ?>
-        <div align="right"><h5>検索結果<?php echo $Number; ?>件</h5></div>
-
+    <h3>従業員検索</h3>
+    <?php
+    echo $this->element('form');
+    ?>
+        <div align="right"><h5><?php echo $Number; ?>件</h5></div>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
@@ -32,7 +28,13 @@ echo $this->Html->css('employee');
                 <td><?= $positionName ?></td>
             </tr>
             <?php endforeach; ?>
-
         </tbody>
     </table>
+    <div align="center">
+        <ul class="pagination">
+            <li><?= $this->Paginator->prev('<') ?></li>
+            <li><?= $this->Paginator->numbers() ?></li>
+            <li><?= $this->Paginator->next('>') ?></li>
+        </ul>
+    </div>
 </div>

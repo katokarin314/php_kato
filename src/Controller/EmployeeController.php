@@ -12,6 +12,9 @@ use App\Controller\AppController;
  */
 class EmployeeController extends AppController
 {
+    public $paginate = [
+		'limit' => 20 // 1ページに表示するデータ件数
+	];
     public function initialize()
     {
         parent::initialize();
@@ -36,8 +39,8 @@ class EmployeeController extends AppController
                 ->where(["name like"=> '%' . $name . '%'])
                 ->contain('PositionName');
         }
-        $this->set('Employee', $employee);   
+        $this->set('Employee', $this->paginate($employee));   
         $number = $employee->count();  
-        $this->set('Number', $number);  
+        $this->set('Number', $number);
     }
 }
