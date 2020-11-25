@@ -28,11 +28,9 @@ echo $this->Html->css('employee');
     </title>
     <?= $this->Html->meta('icon') ?>
     <ul class="header">
-        <h2>従業員一覧</h2>
-        <menu><a href="#">項目2</a></memu>
-        <menu><a href="#">項目3</a></memu>
-        <menu><a href="#">項目4</a></memu>
-        <menu><a href="#">項目5</a></memu>
+        <h2>従業員一覧</h2>　
+        <menu><a href="http://localhost/MIS/training/employee">検索</a></memu>　/
+        <menu><a href="">登録</a></memu>
       </ul>
 </nav>
 </head>
