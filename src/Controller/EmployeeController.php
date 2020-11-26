@@ -12,15 +12,10 @@ use App\Controller\AppController;
  */
 class EmployeeController extends AppController
 {
+
     public $paginate = [
 		'limit' => 20                               // 1ページに表示するデータ件数
 	];
-    public function initialize()
-    {
-        parent::initialize();
-        $this->loadModel('Employee');               //Employeeテーブルの読み込み
-        $this->loadModel('PositionName');           //PositionNameテーブルの読み込み
-    }
     /**
      * Index method
      *
@@ -30,21 +25,21 @@ class EmployeeController extends AppController
     {
         $this->viewBuilder()->setLayout('employee');    //レイアウト読み込み
         $errors = null;                                 //変数の初期化
-        $number = "  ";                                 //変数の初期化
-        $employee = $this->Employee                     //従業員情報全件取得
-            ->find('all')
-            ->contain('PositionName');                  //関連テーブル
-        $all = $employee->count();                      //全従業員数
+        $number = null;                                 //変数の初期化
+        $employee = $this->Employee                     //変数$employeeに代入
+            ->find('all')                               //従業員情報全件取得
+            ->contain('PositionName');                  //関連テーブルとつなげる
+        $all = $employee->count();                      //全従業員数カウント
         if($this->request->is('post')){                 //リクエストがきた場合
-            $name = $this->request->data['name'];       //変数$nameに入れる
+            $name = $this->request->data['name'];       //変数$nameにフォームに入力された文字を代入
             if(empty($name)){                           //フォームに何も入力されないまま検索ボタンを押した場合
                 $errors = "入力してください";            //変数$errorsにコメントを入れる
             }
-            else{$employee = $this->Employee
+            else{$employee = $this->Employee               //フォームに何か入力されていた場合
                 ->find()
-                ->where(["name like"=> '%' . $name . '%']) //検索条件
-                ->contain('PositionName');                 //関連テーブル  
-                $number = $employee->count();              //変数$numberに検索結果の件数を入れる
+                ->where(["name like"=> '%' . $name . '%']) //検索条件(部分一致)
+                ->contain('PositionName');                 //関連テーブル とつなげる 
+                $number = $employee->count();              //検索結果の件数をカウント
             }                      
             if($employee->isEmpty()){                      //検索した結果がNULL(該当者なし)の場合
                 $errors = "該当者はいません";               //変数$errorsにコメントを入れる
@@ -54,5 +49,26 @@ class EmployeeController extends AppController
         $this->set('Number', $number);
         $this->set('All', $all);
         $this->set('Error',$errors); 
+    }
+
+    public function add()
+    {
+        $this->viewBuilder()->setLayout('employee');                                //レイアウト読み込み
+        $errors = null;                                                             //変数の初期化
+        $table = $this->loadModel('PositionName');                                  //役職名テーブルの読み込み
+        $posi_list = $table->find('list' , ['valueField' => 'position_name']);      //役職名リストを作成
+        $this->set('list', $posi_list);
+            if ($this->request->is('post')){                                        //リクエストがきた場合
+                $new_data = $this->request->getData('Employee');                    //変数$new_dataにフォームに入力されたリクエストを取得
+                if(empty($new_data['name'])){                                       //フォームに何も入力されないまま検索ボタンを押した場合
+                    $errors = "氏名を入力してください";
+                }
+                else{
+                    $entity = $this->Employee->newEntity($new_data);                //従業員テーブルに新規登録
+                    $this->Employee->save($entity);
+                    return $this->redirect(['action'=>'index']);                   //一覧画面に戻る
+                }
+            }
+        $this->set('Error',$errors);
     }
 }

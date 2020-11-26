@@ -30,7 +30,7 @@ echo $this->Html->css('employee');
     <ul class="header">
         <h2>従業員一覧</h2>　
         <menu><a href="http://localhost/MIS/training/employee">検索</a></memu>　/
-        <menu><a href="">登録</a></memu>
+        <menu><a href="http://localhost/MIS/training/employee/add">登録</a></memu>
       </ul>
 </nav>
 </head>
