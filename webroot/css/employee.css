@@ -43,8 +43,16 @@ table tr td {
     padding: 0.5625rem 0.625rem;
 }
 input{
-    margin-bottom:10px;		
-    }
+    border:0;
+    padding:5px;
+    color:#aaa;
+    border:solid 1px #aaa;
+    margin:0 0 10px;
+    width:300px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+border-radius: 3px;		
+}
 button {
     display: inline-block;
     padding: 0.1em 1em;

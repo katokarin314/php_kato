@@ -60,13 +60,13 @@ class EmployeeController extends AppController
         $this->set('list', $posi_list);
             if ($this->request->is('post')){                                        //リクエストがきた場合
                 $new_data = $this->request->getData('Employee');                    //変数$new_dataにフォームに入力されたリクエストを取得
-                if(empty($new_data['name'])){                                       //フォームに何も入力されないまま検索ボタンを押した場合
+                if(empty($new_data['name'])){                                       //氏名フォームに何も入力されないまま検索ボタンを押した場合
                     $errors = "氏名を入力してください";
                 }
                 else{
                     $entity = $this->Employee->newEntity($new_data);                //従業員テーブルに新規登録
                     $this->Employee->save($entity);
-                    return $this->redirect(['action'=>'index']);                   //一覧画面に戻る
+                    return $this->redirect(['action'=>'index']);                    //一覧画面に戻る
                 }
             }
         $this->set('Error',$errors);
