@@ -14,7 +14,7 @@ class EmployeeController extends AppController
 {
 
     public $paginate = [
-		'limit' => 20                               // 1ページに表示するデータ件数
+		'limit' => 20                                    //1ページに表示するデータ件数
 	];
     /**
      * Index method
@@ -64,11 +64,23 @@ class EmployeeController extends AppController
                     $errors = "氏名を入力してください";
                 }
                 else{
-                    $entity = $this->Employee->newEntity($new_data);                //従業員テーブルに新規登録
-                    $this->Employee->save($entity);
-                    return $this->redirect(['action'=>'index']);                    //一覧画面に戻る
+                    if(mb_strlen($new_data['name']) > 30){                          //氏名フォームに30字以上入力してボタンを押された場合
+                        $errors = "30字以内にしてください";
+                    }
+                    elseif(preg_match("/[0-9a-zA-Z]/", $new_data['name'])){         //英数字が入力された場合
+                        $errors = "英数字は入力できません";
+                    }
+                    else{
+                        $entity = $this->Employee->newEntity($new_data);            //従業員テーブルに新規登録
+                        $this->Employee->save($entity);
+                        return $this->redirect(['action'=>'success']);              //登録完了画面を表示
+                    }                                               
                 }
             }
         $this->set('Error',$errors);
+    }
+    public function success()
+    {
+        $this->viewBuilder()->setLayout('employee');    
     }
 }
