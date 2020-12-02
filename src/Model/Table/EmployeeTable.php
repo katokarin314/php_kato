@@ -47,18 +47,30 @@ class EmployeeTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+            ->integer('id')                                 //数字であること
+            ->allowEmptyString('id', null, 'create');       //空を認めず、かつ文字列であること
 
         $validator
-            ->scalar('name')
-            ->maxLength('name', 255)
-            ->requirePresence('name', 'create')
-            ->notEmptyString('name');
+            ->scalar('name')                                //スカラ値であること
+            ->maxLength('name', 30,'30字以内にしてください')  //スカラ値が指定した文字数以下であること
+            ->requirePresence('name', 'create')             //フィールドに存在することを要求する。nullは許容する
+            ->notEmptyString('name','氏名を入力してください') //空を認めず、かつ文字列であること
+            ->add('name', 'custom', [
+                'rule' => function ($value) {
+                    if (preg_match("/[0-9a-zA-Z]/", $value)) {
+                        return '全角のみで入力してください';
+                    }
+                    elseif(mb_ereg("^(\s|　)+$", $value)){
+                        return 'スペースのみの入力は不可です';   
+                    }
+                    else{return true;}
+                }]);
 
         $validator
-            ->integer('position')
-            ->allowEmptyString('position');
+            ->integer('position')                           //数字であること
+            ->allowEmptyString('position');                 //空を許容し、かつ文字列であること
         return $validator;
     }
+
+   
 }

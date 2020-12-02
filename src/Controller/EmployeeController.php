@@ -14,7 +14,7 @@ class EmployeeController extends AppController
 {
 
     public $paginate = [
-		'limit' => 20                                    //1ページに表示するデータ件数
+		'limit' => 20                                       //1ページに表示するデータ件数
 	];
     /**
      * Index method
@@ -23,17 +23,17 @@ class EmployeeController extends AppController
      */
     public function index()
     {
-        $this->viewBuilder()->setLayout('employee');    //レイアウト読み込み
-        $errors = null;                                 //変数の初期化
-        $number = null;                                 //変数の初期化
-        $employee = $this->Employee                     //変数$employeeに代入
-            ->find('all')                               //従業員情報全件取得
-            ->contain('PositionName');                  //関連テーブルとつなげる
-        $all = $employee->count();                      //全従業員数カウント
-        if($this->request->is('post')){                 //リクエストがきた場合
-            $name = $this->request->data['name'];       //変数$nameにフォームに入力された文字を代入
-            if(empty($name)){                           //フォームに何も入力されないまま検索ボタンを押した場合
-                $errors = "入力してください";            //変数$errorsにコメントを入れる
+        $this->viewBuilder()->setLayout('employee');        //レイアウト読み込み
+        $errors = null;                                     //変数の初期化
+        $number = null;                                     //変数の初期化
+        $employee = $this->Employee                         //変数$employeeに代入
+            ->find('all')                                   //従業員情報全件取得
+            ->contain('PositionName');                      //関連テーブルとつなげる
+        $all = $employee->count();                          //全従業員数カウント
+        if($this->request->is('post')){                     //リクエストがきた場合
+            $name = $this->request->data['name'];           //変数$nameにフォームに入力された文字を代入
+            if(empty($name)){                               //フォームに何も入力されないまま検索ボタンを押した場合
+                $errors = "入力してください";               //変数$errorsにコメントを入れる
             }
             else{$employee = $this->Employee               //フォームに何か入力されていた場合
                 ->find()
@@ -55,29 +55,20 @@ class EmployeeController extends AppController
     {
         $this->viewBuilder()->setLayout('employee');                                //レイアウト読み込み
         $errors = null;                                                             //変数の初期化
+        $entity = null;                                                             //変数の初期化
         $table = $this->loadModel('PositionName');                                  //役職名テーブルの読み込み
         $posi_list = $table->find('list' , ['valueField' => 'position_name']);      //役職名リストを作成
         $this->set('list', $posi_list);
             if ($this->request->is('post')){                                        //リクエストがきた場合
                 $new_data = $this->request->getData('Employee');                    //変数$new_dataにフォームに入力されたリクエストを取得
-                if(empty($new_data['name'])){                                       //氏名フォームに何も入力されないまま検索ボタンを押した場合
-                    $errors = "氏名を入力してください";
-                }
-                else{
-                    if(mb_strlen($new_data['name']) > 30){                          //氏名フォームに30字以上入力してボタンを押された場合
-                        $errors = "30字以内にしてください";
-                    }
-                    elseif(preg_match("/[0-9a-zA-Z]/", $new_data['name'])){         //英数字が入力された場合
-                        $errors = "英数字は入力できません";
-                    }
-                    else{
-                        $entity = $this->Employee->newEntity($new_data);            //従業員テーブルに新規登録
-                        $this->Employee->save($entity);
-                        return $this->redirect(['action'=>'success']);              //登録完了画面を表示
-                    }                                               
-                }
-            }
-        $this->set('Error',$errors);
+                $entity = $this->Employee->newEntity($new_data);                    //従業員テーブルに新規登録
+                $this->Employee->save($entity);
+                $this->set(compact('entity'));
+                if(!$entity->errors()) {
+                    return $this->redirect(['action'=>'success']);
+                }                                    
+            }  
+            $this->set(compact('entity'));
     }
     public function success()
     {
