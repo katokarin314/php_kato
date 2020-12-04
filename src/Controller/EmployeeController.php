@@ -59,16 +59,17 @@ class EmployeeController extends AppController
         $table = $this->loadModel('PositionName');                                  //役職名テーブルの読み込み
         $posi_list = $table->find('list' , ['valueField' => 'position_name']);      //役職名リストを作成
         $this->set('list', $posi_list);
-            if ($this->request->is('post')){                                        //リクエストがきた場合
-                $new_data = $this->request->getData('Employee');                    //変数$new_dataにフォームに入力されたリクエストを取得
-                $entity = $this->Employee->newEntity($new_data);                    //従業員テーブルに新規登録
-                $this->Employee->save($entity);
-                $this->set(compact('entity'));
-                if(!$entity->errors()) {
-                    return $this->redirect(['action'=>'success']);
-                }                                    
-            }  
+
+        if ($this->request->is('post')){                                            //リクエストがきた場合
+            $new_data = $this->request->getData('Employee');                        //変数$new_dataにフォームに入力されたリクエストを取得
+            $entity = $this->Employee->newEntity($new_data);                        //従業員テーブルに新規登録
+            $this->Employee->save($entity);
             $this->set(compact('entity'));
+            if(!$entity->errors()) {
+                return $this->redirect(['action'=>'success']);
+            }                                    
+        }  
+        $this->set(compact('entity'));
     }
     public function success()
     {

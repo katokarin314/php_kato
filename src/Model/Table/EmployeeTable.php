@@ -57,10 +57,10 @@ class EmployeeTable extends Table
             ->notEmptyString('name','氏名を入力してください') //空を認めず、かつ文字列であること
             ->add('name', 'custom', [
                 'rule' => function ($value) {
-                    if (preg_match("/[0-9a-zA-Z]/", $value)) {  //半角英数の入力を認めない
+                    if (preg_match('/[0-9a-zA-Z]/', $value)) {  //半角英数の入力を認めない
                         return '全角のみで入力してください';
                     }
-                    elseif(mb_ereg("^(\s|　)+$", $value)){      //半角全角スペースのみの入力を認めない
+                    elseif(mb_ereg('^(\s|　)+$', $value)){      //半角全角スペースのみの入力を認めない
                         return 'スペースのみの入力は不可です';   
                     }
                     else{return true;}

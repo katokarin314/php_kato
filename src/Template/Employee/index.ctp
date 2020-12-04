@@ -6,7 +6,7 @@ echo $this->Html->css('employee');
     <?php
     echo $this->element('form');
     ?>
-    <h4><?php echo $Error; ?></h4>
+    <h4><span><?php echo $Error; ?></h4></span>
     <h5><div align="right"><?php echo $Number ; ?>/<?php echo $All ; ?>　</div></h5>
     <table cellpadding="0" cellspacing="0">
         <thead>
