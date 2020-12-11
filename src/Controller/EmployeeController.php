@@ -33,7 +33,7 @@ class EmployeeController extends AppController
         if($this->request->is('post')){                     //リクエストがきた場合
             $name = $this->request->data['name'];           //変数$nameにフォームに入力された文字を代入
             if(empty($name)){                               //フォームに何も入力されないまま検索ボタンを押した場合
-                $errors = "入力してください";               //変数$errorsにコメントを入れる
+                $errors = "入力してください";                //変数$errorsにコメントを入れる
             }
             else{$employee = $this->Employee               //フォームに何か入力されていた場合
                 ->find()
