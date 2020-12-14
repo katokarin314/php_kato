@@ -82,15 +82,23 @@ class MembersController extends AppController
                 $birthday=floor(($now-$birthday)/10000) ;           //年齢計算。余りは切り捨て
                 $key++;                                             //$keyに加算
                 $result[$key]['age']=$birthday;                     //配列にキーとバリューを追加(年齢)
-                $result[$key]['total'] = $data[$key]->sum;          //配列にキーとバリューを追加(購入金額合計)
-                
+                $total = $data[$key]->sum;
+                if ($total >= 100000)
+                {$level = 'ゴールド';} 
+                elseif ($total >= 50000)
+                {$level = 'シルバー';}  
+                else{$level = 'ブロンズ';}
+                $result[$key]['total'] = $level;          //配列にキーとバリューを追加(購入金額合計)    
             endforeach;
-    
-        
+            $purchas_list = $this->Purchases                             //変数$purchasに代入
+            ->find('all')
+            ->where(["member_id "=> $id])  
+            ->contain('Items');                                      //関連テーブルとつなげる
+            $list = $purchas_list->toArray();
     }
         
         $this->set('Result', $result); 
-        $this->set('Purchas', $purchas); 
+        $this->set('List', $list); 
     }
     /**
      * Add method
