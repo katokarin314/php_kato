@@ -4,26 +4,43 @@
  * @var \App\Model\Entity\Member $member
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Members'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Purchases'), ['controller' => 'Purchases', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Purchase'), ['controller' => 'Purchases', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
 <div class="members form large-9 medium-8 columns content">
-    <?= $this->Form->create($member) ?>
-    <fieldset>
-        <legend><?= __('Add Member') ?></legend>
+<?= $this->Form->create($data) ?>
         <?php
-            echo $this->Form->control('name');
-            echo $this->Form->control('birthday');
-            echo $this->Form->control('address');
-            echo $this->Form->control('admission');
-            echo $this->Form->control('exit', ['empty' => true]);
+            echo $this->Form->input('Members.id',['label' => 'ID　　：','default' => $Result[0]['id']]);
+            echo $this->Form->input('Members.name',['label' => '氏名　　：','default' => $Result[0]['name']]);
+            echo $this->Form->input('Members.birthday',[
+                'label' => '生年月日：',
+                'type' => 'date',
+                'dateFormat' => 'YMD',
+                'monthNames' => false,
+                'maxYear' => date('Y'),
+                'minYear' => date('Y') - 100,
+                'default' => $Result[0]['birthday']]);
+            echo $this->Form->input('Members.address',['label' => '住所　　：','default' => $Result[0]['address']]);
+            echo $this->Form->input('Members.admission',[
+                'label' => '入会日　：',
+                'type' => 'date',
+                'dateFormat' => 'YMD',
+                'monthNames' => false,
+                'maxYear' => date('Y'),
+                'minYear' => date('Y') - 100,
+                'default' => $Result[0]['admission']]);
+            echo $this->Form->input('Members.exit', [
+                'label' => '退会日　：',
+                'empty' => true,
+                'type' => 'date',
+                'dateFormat' => 'YMD',
+                'monthNames' => false,
+                'maxYear' => date('Y'),
+                'minYear' => date('Y') - 100,
+                'default' => $Result[0]['exit']])
         ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    
+    <br>
+    <div style="text-align:right;">
+
+    <?=  $this->Form->button('更新する',['type'=>"submit",'name'=>"add"]); ?>
     <?= $this->Form->end() ?>
+    </div>
 </div>
