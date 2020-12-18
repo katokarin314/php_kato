@@ -90,7 +90,7 @@ class MembersTable extends Table
             ->notEmptyDate('admission');
 
         $validator
-            ->date('exit')
+            ->date('withdrawal')
             ->allowEmptyDate('exit');
 
         return $validator;

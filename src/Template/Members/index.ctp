@@ -1,5 +1,5 @@
 <?php
-echo $this->Html->css('employee');
+echo $this->Html->css('member');
 ?>
 <div class="members index large-9 medium-8 columns content">
 
@@ -32,7 +32,7 @@ echo $this->Html->css('employee');
                 <td><?= $result->id ?></td>
                 <td><?= $result->name ?></td>
                 <td><?= $result->age ?>歳</td>
-                <td><?= $purchase_date ->format('Y-m-d'); ?></td>
+                <td><?= $purchase_date ->format('Y年 m月 d日'); ?></td>
                 <td><?= $level ?></td>
                 <td><?= $this->Form->create('詳細',['url'=>['action'=>'data','type'=>'post']]) ?>
                 <?= $this->Form->button('詳細',['name'=> 'id','value'=>$result->id,'type' => 'submit']) ?>

@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Log\Log;
 
 /**
  * Member Controller
@@ -85,7 +86,7 @@ class MembersController extends AppController
             elseif ($data[0]->sum >= 50000)                         //購入合計金額が50000円以上ならシルバー会員
                 {$level = 'シルバー';}  
             else{$level = 'ブロンズ';}                               //購入合計金額が50000円未満ならブロンズ会員
-            $result[0]['total'] = $level;                           //配列にキーとバリューを追加(購入金額合計)
+            $result[0]['level'] = $level;                           //配列にキーとバリューを追加(購入金額合計)
             //購入リストを作成    
             $purchas_list = $this->Purchases                        //変数$purchas_listに購入履歴テーブル情報を代入
             ->find('all')                                           
@@ -109,43 +110,27 @@ class MembersController extends AppController
             ->where(["id "=> $id]); 
         $data = NULL;                                           //postで送られてきたidで絞り込む      
         $result = $member->toArray();                           //配列にする
+        $errors = null;
         
         $new_data=NULL;
-        if (isset($_POST["add"])) {                 //ボタンネーム「add」が押下されたら
-            $new_data = $this->request->getData();  //フォームの内容を取得
-            $id = $new_data['Members']['id'];       //id取得
-            $data=$this->Members->get($id);         //既存データを取得
+        if (isset($_POST["add"])) {                             //ボタンネーム「add」が押下されたら
+            $new_data = $this->request->getData();              //フォームの内容を取得
+            $id = $new_data['Members']['id'];                   //id取得
+            $data=$this->Members->get($id);                     //既存データを取得
             $data=$this->Members->patchEntity($data,$new_data); //エンティティをマージ
-            $this->Members->save($data) ;             //更新
+            $query = $this->Members->save($data) ;              //更新
+            if(!$data->errors()){
+                return $this->redirect(['action'=>'success']);
+            }
         }
         $this->set(compact('data'));
         $this->set('Result',$result);
     }
-
-    /**
-     * Edit method
-     *
-     * @param string|null $id Member id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
+    public function success()
     {
-        $member = $this->Member->get($id, [
-            'contain' => [],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $member = $this->Member->patchEntity($member, $this->request->getData());
-            if ($this->Member->save($member)) {
-                $this->Flash->success(__('The member has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The member could not be saved. Please, try again.'));
-        }
-        $this->set(compact('member'));
+        $this->viewBuilder()->setLayout('member');    
     }
-
+    
     /**
      * Delete method
      *
@@ -153,16 +138,30 @@ class MembersController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete()
     {
-        $this->request->allowMethod(['post', 'delete']);
-        $member = $this->Member->get($id);
-        if ($this->Member->delete($member)) {
-            $this->Flash->success(__('The member has been deleted.'));
-        } else {
-            $this->Flash->error(__('The member could not be deleted. Please, try again.'));
+        $this->viewBuilder()->setLayout('member');              //レイアウト読み込み
+        $id = $this->request->data('id');                       //postで送られてきたデータからidだけを取り出す
+        $member = $this->Members                                //変数$memberに会員テーブル情報を代入
+            ->find('all') 
+            ->where(["id "=> $id]);                              //postで送られてきたidで絞り込む                                  
+        $result = $member->toArray();                           //配列にする
+        $errors = null;
+        $delete_data=NULL;
+        $delete=NULL;
+        if (isset($_POST["delete"])) {                          //ボタンネーム「delete」が押下されたら
+            $delete_data = $this->request->getData();           //フォームの内容を取得
+            $id = $delete_data['Members']['id'];                //id取得
+            $delete=$this->Members->get($id);                   //既存データを取得
+            $delete=$this->Members->delete($delete);            //削除
+            return $this->redirect(['action'=>'success_delete']);
         }
-
-        return $this->redirect(['action' => 'index']);
+        $this->set(compact('delete'));
+        $this->set('Result',$result);
+    
+    }
+    public function successDelete()
+    {
+        $this->viewBuilder()->setLayout('member');    
     }
 }

@@ -7,7 +7,7 @@
 <div class="members form large-9 medium-8 columns content">
 <?= $this->Form->create($data) ?>
         <?php
-            echo $this->Form->input('Members.id',['label' => 'ID　　：','default' => $Result[0]['id']]);
+            echo $this->Form->input('Members.id',['label' => 'ID　　：','default' => $Result[0]['id'],'type'=>'hidden']);
             echo $this->Form->input('Members.name',['label' => '氏名　　：','default' => $Result[0]['name']]);
             echo $this->Form->input('Members.birthday',[
                 'label' => '生年月日：',
@@ -26,7 +26,7 @@
                 'maxYear' => date('Y'),
                 'minYear' => date('Y') - 100,
                 'default' => $Result[0]['admission']]);
-            echo $this->Form->input('Members.exit', [
+            echo $this->Form->input('Members.withdrawal', [
                 'label' => '退会日　：',
                 'empty' => true,
                 'type' => 'date',
@@ -34,9 +34,8 @@
                 'monthNames' => false,
                 'maxYear' => date('Y'),
                 'minYear' => date('Y') - 100,
-                'default' => $Result[0]['exit']])
+                'default' => $Result[0]['withdrawal']])
         ?>
-    
     <br>
     <div style="text-align:right;">
 

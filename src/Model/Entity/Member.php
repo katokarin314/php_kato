@@ -32,7 +32,7 @@ class Member extends Entity
         'birthday' => true,
         'address' => true,
         'admission' => true,
-        'exit' => true,
+        'withdrawal' => true,
         'purchases' => true,
     ];
 }

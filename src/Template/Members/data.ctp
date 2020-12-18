@@ -1,19 +1,19 @@
 <?php
-echo $this->Html->css('employee');
+echo $this->Html->css('member');
 ?>
 <div class="members index large-9 medium-8 columns content">
 
 
     <h3>　No.<?php echo $Result[0]['id'];?> 
         　<?php echo $Result[0]['name'];?>
-        　<?php echo $Result[0]['total'];?>会員
+        　<?php echo $Result[0]['level'];?>会員
         </h3>
     <h4>　年齢　　：<?php echo $Result[0]['age'];?>歳 </h4>
-    <h4>  　生年月日：<?php echo $Result[0]['birthday']->format('Y-m-d');?></h4>
+    <h4>  　生年月日：<?php echo $Result[0]['birthday']->format('Y年 m月 d日');?></h4>
     <h4>  　住所　　：<?php echo $Result[0]['address'];?></h4>
-    <h4>  　入会日　：<?php echo $Result[0]['admission']->format('Y-m-d');?></h4>
-    <h4>  　退会日　：<?php if($Result[0]['exit'] == null){echo '-' ;}
-                           else{echo $Result[0]['exit']->format('Y-m-d');}?></h4> 
+    <h4>  　入会日　：<?php echo $Result[0]['admission']->format('Y年 m月 d日');?></h4>
+    <h4>  　退会日　：<?php if($Result[0]['withdrawal'] == null){echo '　-　' ;}
+                           else{echo $Result[0]['withdrawal']->format('Y年 m月 d日');}?></h4> 
     <h5></h5>
     <h4>  　購入履歴</h4> 
     <table cellpadding="0" cellspacing="0">

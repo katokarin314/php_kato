@@ -16,7 +16,7 @@
 $cakeDescription = 'CakePHP: the rapid development php framework';
 ?>
 <?php
-echo $this->Html->css('employee');
+echo $this->Html->css('member');
 ?>
 <!DOCTYPE html>
 <html>
@@ -28,7 +28,8 @@ echo $this->Html->css('employee');
     </title>
     <?= $this->Html->meta('icon') ?>
     <ul class="header">
-        <h2>会員名簿</h2>　
+        <h2>会 員 名 簿</h2>　
+        <menu><a href="http://localhost/MIS/training/members">List</a></memu>
       </ul>
 </nav>
 </head>
@@ -37,6 +38,8 @@ echo $this->Html->css('employee');
     <?= $this->fetch('content') ?>
 
 </body>
+<br>
+<br>
 <footer>
     <th>フッター</th>
 </footer>
