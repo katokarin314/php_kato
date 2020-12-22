@@ -19,7 +19,9 @@ echo $this->Html->css('member');
         <tbody>
         <?php foreach ($Result as $result): 
             $cnt = count($result->purchases)-1;
-            $purchase_date = $result->purchases[$cnt]->purchase_date;
+            if(empty($result->purchases[$cnt]->purchase_date)){$purchase_date = '-' ;}
+            else{$purchase_date = $result->purchases[$cnt]->purchase_date;
+                $purchase_date = $purchase_date ->format('Y年 m月 d日');}
             $total = $result->total;
             if ($total >= 100000)
             {$level = 'ゴールド';} 
@@ -32,7 +34,7 @@ echo $this->Html->css('member');
                 <td><?= $result->id ?></td>
                 <td><?= $result->name ?></td>
                 <td><?= $result->age ?>歳</td>
-                <td><?= $purchase_date ->format('Y年 m月 d日'); ?></td>
+                <td><?= $purchase_date?></td>
                 <td><?= $level ?></td>
                 <td><?= $this->Form->create('詳細',['url'=>['action'=>'data','type'=>'post']]) ?>
                 <?= $this->Form->button('詳細',['name'=> 'id','value'=>$result->id,'type' => 'submit']) ?>

@@ -52,16 +52,17 @@ class MembersTable extends Table
 
         $validator
             ->scalar('name')
-            ->maxLength('name', 100)
+            ->maxLength('name', 100,'文字数が超過しています')      //100字以上の入力を認めない
             ->requirePresence('name', 'create')
-            ->notEmptyString('name')
+            ->notEmptyString('name',[
+                'message' => '氏名を入力してください'])            //NULLを認めない
             ->add('name', 'custom', [
                 'rule' => function ($value) {
-                    if (preg_match('/[0-9a-zA-Z]/', $value)) {  //半角英数の入力を認めない
-                        return '全角のみで入力してください';
+                    if (preg_match('/[0-9a-zA-Z]/', $value)) {   //半角英数の入力を認めない
+                        return '不正な値です';
                     }
-                    elseif(mb_ereg('^(\s|　)+$', $value)){      //半角全角スペースのみの入力を認めない
-                        return 'スペースのみの入力は不可です';   
+                    elseif(mb_ereg('^(\s|　)+$', $value)){       //半角全角スペースのみの入力を認めない
+                        return '不正な値です';   
                     }
                     else{return true;}
                 }]);
@@ -73,13 +74,14 @@ class MembersTable extends Table
 
         $validator
             ->scalar('address')
-            ->maxLength('address', 255)
+            ->maxLength('address', 255,'文字数が超過しています')    //255字以上の入力を認めない
             ->requirePresence('address', 'create')
-            ->notEmptyString('address')
+            ->notEmptyString('address',[
+                'message' => '住所を入力してください'])             //NULLを認めない 
             ->add('address', 'custom', [
                 'rule' => function ($value) {
-                    if (mb_ereg('^(\s|　)+$', $value)){      //半角全角スペースのみの入力を認めない
-                        return 'スペースのみの入力は不可です';   
+                    if (mb_ereg('^(\s|　)+$', $value)){           //半角全角スペースのみの入力を認めない
+                        return '不正な値です';   
                     }
                     else{return true;}
                 }]);
@@ -91,7 +93,7 @@ class MembersTable extends Table
 
         $validator
             ->date('withdrawal')
-            ->allowEmptyDate('exit');
+            ->allowEmptyDate('withdrawal');
 
         return $validator;
     }
