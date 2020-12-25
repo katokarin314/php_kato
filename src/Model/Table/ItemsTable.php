@@ -60,9 +60,12 @@ class ItemsTable extends Table
             ->notEmptyString('name');
 
         $validator
-            ->integer('price')
-            ->requirePresence('price', 'create')
-            ->notEmptyString('price');
+            ->integer('price',
+                'message' = '数字で入力してください')
+            ->requirePresence('price', 'create',[
+                'message' => '数字で入力してください'])
+            ->notEmptyString('price',[
+                'message' => '数字で入力してください']);
 
         $validator
             ->integer('stock')

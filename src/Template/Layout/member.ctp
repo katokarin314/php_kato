@@ -29,7 +29,13 @@ echo $this->Html->css('member');
     <?= $this->Html->meta('icon') ?>
     <ul class="header">
         <h2>会 員 名 簿</h2>　
-        <menu><a href="http://localhost/MIS/training/members">List</a></memu>
+        <menu><a href="http://localhost/MIS/training/members">MemberList</a></memu>
+        　/
+        <menu><a href="http://localhost/MIS/training/members/new">NewMember</a></memu>
+        　/
+        <menu><a href="http://localhost/MIS/training/members/item_list">ItemList</a></memu>
+        　/
+        <menu><a href="http://localhost/MIS/training/members/new_item">NewItem</a></memu> 
       </ul>
 </nav>
 </head>

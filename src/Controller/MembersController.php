@@ -66,7 +66,7 @@ class MembersController extends AppController
             ->contain('Purchases');                                     //関連テーブルとつなげる
             $result = $member->toArray();                               //配列にする
             //個人購入金額の合計を算出
-            $this->loadModel('Purchases');                              //購入履歴モデル読み込み
+            $this->loadModel('Purchases');                              //購入履歴テーブル読み込み
             $purchas = $this->Purchases                                 //変数$purchasに購入履歴テーブル情報を代入
             ->find('all')
             ->where(["member_id "=> $id])                               //postで送られてきたidで絞り込む
@@ -171,5 +171,50 @@ class MembersController extends AppController
     public function successDelete()
     {
         $this->viewBuilder()->setLayout('member');    
+    }
+    public function new()
+    {
+        $this->viewBuilder()->setLayout('member');                   //レイアウト読み込み
+        $errors = null;                                              //変数の初期化
+        $data = null;                                                //変数の初期化
+        if ($this->request->is('post')){                             //リクエストがきた場合
+            $new_data = $this->request->getData();                   //変数$new_dataにフォームに入力されたリクエストを取得
+            $data = $this->Members->newEntity($new_data);            //会員テーブルに新規登録
+            $this->Members->save($data);
+            $this->set(compact('data'));
+            if(!$data->errors()) {
+                return $this->redirect(['action'=>'success_new']);
+            }                                    
+        }  
+        $this->set(compact('data'));
+    }
+    public function successNew()
+    {
+        $this->viewBuilder()->setLayout('member');    
+    }
+    public function itemList()
+    {
+        $this->viewBuilder()->setLayout('member');        //レイアウト読み込み
+        $this->loadModel('Items');                        //商品テーブル読み込み
+        $item = $this->Items                              //変数$itemに代入
+        ->find('all') ;                                   //全件取得
+        $this->set('Item',$item); 
+    }
+    public function newItem()
+    {
+        $this->viewBuilder()->setLayout('member');                   //レイアウト読み込み
+        $this->loadModel('Items');                                   //商品テーブル読み込み
+        $errors = null;                                              //変数の初期化
+        $data = null;                                                //変数の初期化
+        if ($this->request->is('post')){                             //リクエストがきた場合
+            $new_item = $this->request->getData();                   //変数$new_itemにフォームに入力されたリクエストを取得
+            $data = $this->Items->newEntity($new_item);                        //従業員テーブルに新規登録
+            $this->Items->save($data);
+            $this->set(compact('data'));
+            if(!$data->errors()) {
+                return $this->redirect(['action'=>'success_new']);
+            }                                    
+        }  
+        $this->set(compact('data'));
     }
 }
