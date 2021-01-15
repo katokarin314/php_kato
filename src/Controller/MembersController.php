@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Log\Log;
+use Cake\Datasource\ConnectionManager;
+use \Exception; 
 
 /**
  * Member Controller
@@ -194,11 +196,53 @@ class MembersController extends AppController
     }
     public function itemList()
     {
-        $this->viewBuilder()->setLayout('member');        //レイアウト読み込み
-        $this->loadModel('Items');                        //商品テーブル読み込み
-        $item = $this->Items                              //変数$itemに代入
-        ->find('all') ;                                   //全件取得
-        $this->set('Item',$item); 
+        $this->viewBuilder()->setLayout('member');                      //レイアウト読み込み
+        $data = null;                                                   //変数の初期化
+        $error =null;                                                   //変数の初期化
+        $this->loadModel('Items');                                      //商品テーブル読み込み
+        $item = $this->Items                                            //変数$itemに代入
+        ->find('all')                                                   //全件取得
+        ->toArray();                                                    //配列化
+        if ($this->request->is('post')){                                //リクエストがきた場合
+            $this->loadModel('Items');                                  //商品テーブル読み込み
+            $connection = ConnectionManager::get('default');
+            $connection->begin();
+            try {                                      
+                $key = -1;                                              //配列を順番にとりだすために-1からスタート
+                $item = $this->Items                                    //変数$itemに代入                            
+                         ->find('all')                                  //全件取得
+                         ->toArray();                                   //配列化
+                foreach ($item as $row):                                //$itemを一行ずつ処理
+                    $key++;                                             //$keyに加算
+                    $new_data = $this->request->getData();              //フォームの内容を取得
+                    //フォームの内容を変数に代入
+                    $id = $new_data['Items'.$key.'id'];             
+                    $name = $new_data['Items'.$key.'name'];
+                    $price = $new_data['Items'.$key.'price'];
+                    $stock = $new_data['Items'.$key.'stock'];
+                    $sales = $new_data['Items'.$key.'sales'];
+                    //上記の変数を配列化
+                    $new_data = array('id'=>(int)$id, 'name'=>$name, 'price'=>(int)$price,'stock'=>(int)$stock,'sales'=>(int)$sales);
+                    if($new_data['sales']>$new_data['stock']){          //もし入力された注文数が在庫数を上回っていたらエラー
+                        throw new Exception();
+                    };
+                    $data=$this->Items->get($id);                       //既存データを取得
+                    $data=$this->Items->patchEntity($data,$new_data);   //エンティティをマージ
+                    $query = $this->Items->save($data) ;                //更新
+                endforeach; 
+                $connection->commit();                                  //エラーが発生せずに処理を終えたらコミット
+                if(!$data->errors()){                                   //エラーが発生せずにコミットまで終わったら
+                    return $this->redirect(['action'=>'success']);      //更新完了画面へ遷移
+                };                          
+             } catch (Exception $e) {                                   //エラーが発生した場合
+                 $this->Flash->error('exception');
+                 $connection->rollback();                               //全てロールバック
+                 $error = '入力された値が不正です';                       //エラーメッセージ代入
+            }
+        }
+        $this->set(compact('data'));   
+        $this->set('Item',$item);        
+        $this->set('Error',$error);
     }
     public function newItem()
     {
